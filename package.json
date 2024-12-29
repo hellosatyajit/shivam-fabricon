@@ -18,6 +18,7 @@
     "astro": "^5.1.1",
     "astro-seo": "^0.8.4",
     "contentful": "^11.3.3",
+    "framer-motion": "^11.15.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^3.4.17"

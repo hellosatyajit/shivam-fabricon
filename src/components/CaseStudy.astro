@@ -1,22 +1,24 @@
 ---
-import { fetchCaseStudies } from '../utils/sanityData';
-import CaseStudySlider from '../components/CaseStudySlider.jsx';
+import { fetchCaseStudies } from "../utils/sanityData";
+import CaseStudySlider from "../components/CaseStudySlider.jsx";
 
-// Fetch the case studies from the Sanity CMS or any other source
 const caseStudies = await fetchCaseStudies();
 
-// If needed, format the data before passing it to the React component
 const formattedCaseStudies = caseStudies.map((caseStudy) => ({
   title: caseStudy.title,
   description: caseStudy.description,
   slug: caseStudy.slug,
   image: caseStudy.images[0]?.src || "",
-  alt: caseStudy.images[0]?.alt || "Default alt text",
+  projectType: caseStudy.projectType || "Project Type",
 }));
 ---
 
-<section>
-
-      <CaseStudySlider caseStudies={formattedCaseStudies} client:load />
-    </section> 
-  
+<section class="py-16 px-4">
+  <div class="text-center mb-12">
+    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 lg:mb-0 mb-4">
+      Solving Problems,
+      <br /><span class="text-blue-900">Delivering Results</span>
+    </h2>
+  </div>
+  <CaseStudySlider caseStudies={formattedCaseStudies} client:load />
+</section>

@@ -1,0 +1,29 @@
+---
+import { fetchClientData } from "../utils/sanityData";
+
+const clients = await fetchClientData();
+---
+
+<section
+  class="py-16 container mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 px-4"
+>
+  <div class="space-y-2 col-span-6">
+    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 lg:mb-0 mb-4">
+      Investors & Partners
+    </h2>
+    <p class="text-gray-600 lg:max-w-lg">
+      We believe that collaboration is key to building a sustainable future. Our
+      investors and partners play a crucial role in driving our mission.
+    </p>
+  </div>
+
+  <div
+    class="flex flex-wrap md:flex-wrap-reverse md:justify-end gap-6 col-span-6"
+  >
+    {
+      clients.map((client) => (
+        <img src={client.logo} alt={client.name} class="h-10 w-auto" />
+      ))
+    }
+  </div>
+</section>

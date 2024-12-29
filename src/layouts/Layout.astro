@@ -1,42 +1,51 @@
 ---
-import Header from "../components/Header.astro"
-import Footer from "../components/Footer.astro"
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 import SEO from "../components/SEO.astro";
 
 const seoData = {
   title: "Shivam Fabrication",
   description: "Expert fabrication services for your business needs.",
-  url: "https://shivam-fab-git-main-manb35624-gmailcoms-projects.vercel.app",
-  image: "https://shivam-fab-git-main-manb35624-gmailcoms-projects.vercel.app/HeroImg.png",
+  url: "https://shivamfabricon.in",
   keywords: "fabrication, metalwork, custom solutions",
 };
 ---
+
 <!doctype html>
 <html lang="en" class="scroll-smooth">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	 	<SEO {...seoData} />
-		<link rel="icon" type="image/svg+xml" href="/SF_Logo.png" />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-		<meta name="generator" content={Astro.generator} />
-
-		<title>Shivam Fabrication</title>
-	</head>
-	<body class="font-inter">
-		
-		<Header/>
-		<slot />
-		<Footer/>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SEO {...seoData} />
+    <link rel="icon" type="image/svg+xml" href="/SF_Logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>{seoData.title}</title>
+  </head>
+  <body class="font-inter">
+    <Header />
+    <slot />
+    <Footer />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  * {
+    font-family: "DM Sans", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
 </style>

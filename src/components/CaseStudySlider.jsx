@@ -1,83 +1,127 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const CaseStudySlider = ({ caseStudies }) => {
+const SLIDE_DURATION = 5000;
+const PROGRESS_UPDATE_INTERVAL = 100;
+
+export default function TestimonialCarousel({ caseStudies }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
-  // Cycle through case studies every 10 seconds
   useEffect(() => {
-    if (caseStudies.length > 0) {
-      const interval = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % caseStudies.length);
-      }, 10000); // Change case study every 10 seconds
+    let timer;
+    let progressTimer;
 
-      return () => clearInterval(interval); // Cleanup interval on unmount
-    }
-  }, [caseStudies]);
+    const startTimers = () => {
+      setProgress(0);
+
+      progressTimer = setInterval(() => {
+        setProgress((prevProgress) => {
+          if (prevProgress >= 100) {
+            clearInterval(progressTimer);
+            return 100;
+          }
+          return (
+            prevProgress + (PROGRESS_UPDATE_INTERVAL / SLIDE_DURATION) * 100
+          );
+        });
+      }, PROGRESS_UPDATE_INTERVAL);
+
+      timer = setTimeout(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % caseStudies.length);
+      }, SLIDE_DURATION);
+    };
+
+    startTimers();
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(progressTimer);
+    };
+  }, [currentIndex]);
 
   return (
-    <section className="bg-gray-50 pt-8 pb-16">
-      <div className="container mx-auto px-6 md:px-12 lg:px-24">
-        {/* Section Header */}
-        <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight mb-10">
-         Case Study
-        </h2>
+    <div className="w-full max-w-5xl mx-auto">
+      <div className="bg-gray-100 rounded-3xl border border-gray-300 bg-card text-card-">
+        <div className="grid md:grid-cols-2 gap-2 md:gap-6">
+          <div className="space-y-4 p-4 pt-8 md:p-10">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+                className="h-72 md:h-96 space-y-2"
+              >
+                <h3 className="text-2xl font-semibold">
+                  {caseStudies[currentIndex].title}
+                </h3>
+                <p className="text-gray-600 pb-4 md:pb-8">
+                  "{caseStudies[currentIndex].description}"
+                </p>
+                <a
+                  className="flex items-center justify-center font-medium bg-blue-900 text-white px-6 py-3 rounded-full hover:bg-blue-950 space-x-2 group w-fit"
+                  href={`/services/${caseStudies[currentIndex].slug}`}
+                >
+                  <span>Learn More</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    className="w-4 h-4 group-hover:-rotate-45 transition-all duration-100"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                  >
+                    <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+                  </svg>
+                </a>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-        {/* Case Study Slider */}
-        {caseStudies.length > 0 ? (
-          <div className="relative">
-            {caseStudies.map((study, index) => (
-              <div
-                key={study.slug}
-                className={`rounded-3xl bg-blue-100  shadow-lg flex flex-col md:flex-row  gap-6 transition-opacity duration-700 ${
-                  index === currentIndex ? "opacity-100" : "opacity-0 hidden"
+          <div className="aspect-video md:aspect-square p-2">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentIndex}
+                src={caseStudies[currentIndex].image}
+                alt={caseStudies[currentIndex].title}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="object-cover w-full h-full rounded-2xl"
+              />
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex justify-between gap-4 md:w-3/4 m-auto mt-5">
+        {caseStudies
+          .map((caseStudy) => caseStudy.projectType)
+          .map((label, index) => (
+            <div key={index} className="flex-1 space-y-2">
+              <div className="h-1 rounded-full bg-gray-200 overflow-hidden">
+                <div
+                  className="h-full bg-blue-900 transition-all duration-100 ease-linear"
+                  style={{
+                    width: index === currentIndex ? `${progress}%` : "0%",
+                  }}
+                />
+              </div>
+              <span
+                className={`flex items-center justify-center text-center text-sm transition-colors m-auto w-fit ${
+                  index === currentIndex
+                    ? "text-blue-900 font-medium"
+                    : "text-gray-400 "
                 }`}
               >
-                {/* Text Content */}
-                <div className="flex-col p-8 lg:p-10 text-center md:text-left lg:text-justify font-semibold justify-between md:w-1/2">
-                  <h3 className="text-3xl font-bold mb-4 lg:mb-10 ">
-                    {study.title}
-                  </h3>
-                  <p className="text-gray-600  font-medium  mb-6">
-                    {study.description}
-                  </p>
-                  <a
-                    href={`/caseStudies/${study.slug}`}
-                    className="inline-block bg-blue-600 text-white font-medium px-6 py-3 rounded-3xl shadow-md hover:bg-blue-700 transition"
-                  >
-                    View case study
-                  </a>
-                </div>
-
-                {/* Image */}
-                <div className="flex md:w-1/2 w-full justify-end">
-                  <img
-                    src={study.image}
-                    alt={`Image for ${study.title}`}
-                    className="p-2  object-cover rounded-3xl w-full lg:w-[90%] h-72 lg:h-96"
-                  />
-                </div>
-              </div>
-            ))}
-
-            {/* Navigation Dots */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 mt-6">
-              {caseStudies.map((_, index) => (
-                <button
-                  key={index}
-                  className={`h-3 w-3 rounded-full ${
-                    index === currentIndex ? "bg-blue-600" : "bg-gray-300"
-                  } transition-all`}
-                  onClick={() => setCurrentIndex(index)}
-                ></button>
-              ))}
+                {label}
+              </span>
             </div>
-          </div>
-        ) : (
-          <p className="text-center text-gray-500">Loading case studies...</p>
-        )}
+          ))}
       </div>
-    </section>
+    </div>
   );
-};
-
-export default CaseStudySlider;
+}

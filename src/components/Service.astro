@@ -10,91 +10,74 @@ const serviceDetails = services.map((service) => ({
   alt: service.images[0]?.alt || "Default alt text",
   slug: service.slug,
 }));
-
-const {
-  heading = "Providing Best Services",
-  subheading = "We are dedicated to providing the best services in the sustainability manufacturing industry. Our commitment to excellence is reflected in our innovative practices, cutting-edge technology, and a passionate team of experts.",
-} = Astro.props;
 ---
-<section class="py-12 bg-white" id="Services">
-  <div class="container mx-auto px-6 sm:px-6 lg:px-14">
-    <!-- Heading Section -->
-    <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-10">
-      <div class="lg:w-[28%] text-center lg:text-left">
-        <h2
-          class="text-4xl lg:text-5xl lg:leading-tight font-bold text-gray-900"
-        >
-          {heading}
-        </h2>
-      </div>
-      <div class="lg:max-w-lg text-justify lg:text-justify mt-6 lg:mt-0">
-        <p class="text-gray-600 font-medium">{subheading}</p>
-      </div>
-    </div>
 
-    <!-- Service Details Section -->
-    <div class="py-2">
-      {
-        serviceDetails.slice(0, 3).map((service, index) => (
-          <div
-            class={`flex flex-col lg:flex-row items-center lg:items-center gap-6 justify-between bg-white border-y ${
-              index === 0 ? 'border-t-0' : ''
-            } ${index === 2 ? 'border-b-0' : ''} py-6 lg:py-10`}
-          >
-            <!-- Service Image -->
-            <img
-              src={service.image}
-              alt={service.alt}
-              class="w-[100%] lg:w-[30%] h-64 lg:h-40 rounded-2xl object-cover"
-            />
-            
-            <!-- Content Section -->
-            <div class="flex  w-full lg:w-[70%]  flex-row items-center lg:items-center justify-between gap-10 px-2 lg:pl-4">
-              <div class=" w-[80%] lg:w-full flex flex-col lg:flex-row lg:items-center justify-between gap-2 lg:gap-10 ">
-                
-                <!-- Service Title -->
-                <div class=" lg:w-2/5 flex justify-start  lg:justify-start lg:items-center  lg:text-left">
-                  <h3 class="text-3xl lg:leading-tight lg:text-4xl font-semibold">
-                    {service.title}
-                  </h3>
-                </div>
-
-                <!-- Service Description -->
-                <div class="lg:w-1/2 flex lg:justify-start lg:items-center text-justify lg:text-justify">
-                  <p class="text-gray-600 text-sm mt-2">{service.description}</p>
-                </div>
-              </div>
-                <!-- Arrow Icon (Centered Horizontally) -->
-                <div class="flex items-center text-center justify-center w-10 h-10 bg-blue-100 rounded-full border mx-auto group">
-                  <a href={`/services/${service.slug}`} class="group">
-                    <span>
-                      <img
-                        src="/arrowblack.svg"
-                        width="20"
-                        height="20"
-                        alt="arrowblack"
-                        class="transition-transform duration-500 ease-in-out transform group-hover:rotate-[-45deg] group-active:rotate-[-45deg] mb-1 mr-1"
-                      />
-                    </span>
-                  </a>
-                </div>
-              
-            </div>
-          </div>
-        ))
-      }
-
-      <!-- Learn More Button -->
-      <div class="text-center mt-8">
-        <a class="flex justify-center" href="/servicesPage">
-          <button
-            class="flex items-center justify-center font-medium bg-[#072F6A] text-white px-6 py-2 rounded-lg hover:bg-blue-600 space-x-2"
-          >
-            <span>Learn More</span>
-            <img src="/arrow.svg" alt="arrow" class="w-4 h-4" />
-          </button>
-        </a>
-      </div>
-    </div>
+<section class="py-16 bg-white container mx-auto px-4 space-y-8" id="Services">
+  <div class="space-y-2 col-span-6">
+    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 lg:mb-0 mb-4">
+      Providing Best Services
+    </h2>
+    <p class="text-gray-600 lg:max-w-lg">
+      We are dedicated to providing the best services in the sustainability
+      manufacturing industry. Our commitment to excellence is reflected in our
+      innovative practices, cutting-edge technology, and a passionate team of
+      experts.
+    </p>
   </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+    {
+      serviceDetails.slice(0, 4).map((service) => (
+        <div
+          class="flex flex-col sm:flex-row gap-4 group"
+        >
+          <img
+            src={service.image}
+            alt={service.alt}
+            class="h-64 aspect-square rounded-xl object-cover"
+          />
+          <div class="space-y-4 py-4">
+            <h3 class="text-3xl lg:leading-tight font-semibold">
+              {service.title}
+            </h3>
+            <p class="text-gray-600 text-sm">{service.description}</p>
+            <a
+              href={`/services/${service.slug}`}
+              class="flex items-center justify-center font-medium group space-x-2 w-fit hover:underline [&_svg]:hover:-rotate-45"
+            >
+              <span>Learn More</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                class="w-4 h-4 invisible group-hover:visible transition-all duration-100"
+                fill="currentColor"
+                viewBox="0 0 256 256"
+              >
+                <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <a
+    class="focus:ring-4 focus:ring-blue-700 focus:outline-none flex items-center justify-center font-medium bg-blue-900 text-white px-6 py-3 rounded-full hover:bg-blue-950 space-x-2 group w-fit m-auto"
+    href="/services"
+  >
+    <span>View More</span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      class="w-4 h-4 group-hover:-rotate-45 transition-all duration-100"
+      fill="currentColor"
+      viewBox="0 0 256 256"
+      ><path
+        d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+      ></path></svg
+    >
+  </a>
 </section>

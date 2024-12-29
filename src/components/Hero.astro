@@ -1,113 +1,64 @@
----
-import '@fontsource/inter';
-interface HeroProps {
-  title: string;
-  subtitle?: string;
-  buttonText?: string;
-  buttonLink?: string;
-  imageUrl?: string;
-  arrowsvg?: string;
-  rocketsvg?:string;
-  svgText?: string;
-}
+<main class="container mx-auto grid md:grid-cols-12 py-10 md:py-16 gap-10">
+  <div class="md:col-span-7 flex flex-col gap-4 justify-center px-4">
+    <div
+      class="flex items-center font-medium space-x-2 text-sm pl-1 pr-2 py-1 text-black border-gray-200 border rounded-3xl w-fit"
+    >
+      <span
+        class="w-5 h-5 bg-[#072F6A] rounded-full flex items-center justify-center"
+      >
+        <img src="/rocket.svg" alt="icon" class="w-3 h-3" />
+      </span>
+      <span>4.8<span class="text-gray-600 ml-1">customer rating</span></span>
+    </div>
 
-const {
-  title = " Engineering for Sustainable Future",
-  subtitle = " Discover how our innovative EPC solutions are transforming industries and creating a more sustainable world creating a more sustainable world ",
-  buttonText="Read Our Work",
-  buttonLink="#",
-  imageUrl="/HeroImg.png",
-  rocketsvg = "/rocket.svg",
-  arrowsvg="/arrow.svg",
-  svgTextRate = "4.8/5.0",
-  svgText= " customer rating"
-} = Astro.props;
----
+    <h1 class="text-5xl lg:text-7xl font-bold leading-none text-gray-900">
+      Engineering for Sustainable Future
+    </h1>
+    <p class="text-gray-700 font-medium leading-snug max-w-96">
+      Discover how our innovative EPC solutions are transforming industries and
+      creating a more sustainable world creating a more sustainable world.
+    </p>
+    <a
+      class="focus:ring-4 focus:ring-blue-700 focus:outline-none flex items-center justify-center font-medium bg-blue-900 text-white px-6 py-3 rounded-full hover:bg-blue-950 space-x-2 sm:w-fit group mt-4"
+      href="#services"
+    >
+      <span>Check Our Work</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        class="w-4 h-4 group-hover:-rotate-45 transition-all duration-100"
+        fill="currentColor"
+        viewBox="0 0 256 256"
+        ><path
+          d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+        ></path></svg
+      >
+    </a>
 
-<section class="bg-white py-12">
-  <div
-    class="container mx-auto  px-6 sm:px-6  lg:px-14 grid grid-cols-1 lg:grid-cols-2 items-center gap-16"
-  >
-   
-    <div>
-        <span class="flex items-center justify-center lg:justify-start font-medium space-x-2 mb-4">
-            <span class="text-sm px-1  py-1 text-black  border-gray-200 border rounded-3xl flex items-center  space-x-2">
-              <span class="w-5 h-5   bg-[#072F6A] rounded-full flex items-center justify-center">
-                <img src={rocketsvg} alt="icon" class="w-3 h-3" />
-              </span>
-              <span>{svgTextRate}<span class="text-gray-600">{svgText}</span></span>
-            </span>
-            </span>
+    <div class="flex justify-center lg:justify-start space-x-4">
+      {
+        ["Engineering", "Construction", "Procurement"].map((item) => (
+          <span class="flex items-center text-sm text-gray-600">
+            <svg
+              class="w-5 h-5 text-blue-900 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.93-10.62L9 13.5l-2.93-2.62a.75.75 0 111.06-1.06L9 11.44l3.87-3.56a.75.75 0 011.06 1.06z" />
+            </svg>
+            {item}
           </span>
-          
-      <h1 class="text-5xl lg:text-7xl font-bold leading-tight lg:leading-tight text-center lg:text-left text-gray-900 mb-4">
-       {title}</span>
-      </h1>
-      <p class="text-gray-700  text-center font-medium sm:text-center md:text-center lg:text-left mb-6 mr-4">
-       {subtitle}
-      </p>
-      <a class=" flex justify-center lg:justify-start" href="#Services">
-        <button
-          class="flex items-center justify-center font-medium bg-[#072F6A] text-white px-6 py-2 rounded-lg hover:bg-blue-600 space-x-2"
-        >
-          <span>{buttonText}</span>
-          <img src={arrowsvg} alt="arrow" class="w-4 h-4" />
-        </button>
-      </a>
-      
-      <div class="flex justify-center lg:justify-start space-x-4 mt-6">
-        <span class="flex items-center text-sm text-gray-600">
-          <svg
-            class="w-5 h-5 text-[#236CF6] mr-2"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.93-10.62L9 13.5l-2.93-2.62a.75.75 0 111.06-1.06L9 11.44l3.87-3.56a.75.75 0 011.06 1.06z"
-            ></path>
-          </svg>
-          Engineering
-        </span>
-        <span class="flex items-center text-sm text-gray-600">
-          <svg
-            class="w-5 h-5 text-[#236CF6] mr-2"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.93-10.62L9 13.5l-2.93-2.62a.75.75 0 111.06-1.06L9 11.44l3.87-3.56a.75.75 0 011.06 1.06z"
-            ></path>
-          </svg>
-          Construction
-        </span>
-        <span class="flex items-center text-sm text-gray-600">
-          <svg
-            class="w-5 h-5 text-[#236CF6] mr-2 "
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.93-10.62L9 13.5l-2.93-2.62a.75.75 0 111.06-1.06L9 11.44l3.87-3.56a.75.75 0 011.06 1.06z"
-            ></path>
-          </svg>
-          Procurement
-        </span>
-      </div>
-    </div>
-
-    <!-- Right Section -->
-    <div class="relative lg:h-[630px] w-full">
-      <img
-        src={imageUrl}
-        class="w-full h-full object-cover object-center rounded-sm shadow-lg"
-        alt="Image description"
-      />
-    </div>
-    
-      
-     
+        ))
+      }
     </div>
   </div>
-</section>
 
-
+  <div class="md:col-span-5 md:px-4">
+    <img
+      src="/HeroImg.png"
+      class="w-full aspect-square object-cover object-center md:rounded-3xl shadow-lg"
+      alt="Image description"
+    />
+  </div>
+</main>

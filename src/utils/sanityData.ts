@@ -106,6 +106,7 @@ export interface CaseStudy {
   slug: string;
   description: string; 
   images: CaseStudyImage[];
+  projectType: string;
 }
 
 export async function fetchCaseStudies(): Promise<CaseStudy[]> {

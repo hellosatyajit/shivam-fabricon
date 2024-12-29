@@ -2,7 +2,7 @@
 export interface Props {
   heading: string;
   subheading: string;
-  PageName:string;
+  PageName: string;
   Details: {
     title: string;
     description: string;
@@ -12,65 +12,52 @@ export interface Props {
   }[];
 }
 
-const { heading, subheading, Details,PageName } = Astro.props;
+const { heading, subheading, Details, PageName } = Astro.props;
 ---
 
-<section class="py-12 bg-white">
-  <div class="container mx-auto px-6 sm:px-6 lg:px-14">
-    <!-- Header Section -->
-    <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-10">
-      <div class="lg:w-[28%] text-center lg:text-left">
-        <h1 class="text-4xl lg:text-5xl lg:leading-tight font-bold text-gray-900">
-          {heading}
-        </h1>
-      </div>
-      <div class="lg:max-w-lg text-justify lg:text-justify mt-6 lg:mt-0">
-        <p class="text-gray-600 font-medium">{subheading}</p>
-      </div>
-    </div>
+<section class="py-16 px-4 container mx-auto space-y-16">
+  <div class="space-y-2 col-span-6">
+    <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 lg:mb-0 mb-4">
+      {heading}
+    </h1>
+    <p class="text-gray-600 lg:max-w-lg">
+      {subheading}
+    </p>
+  </div>
 
-    <!-- Services Section -->
-    <div class="py-2">
-      {Details.map((data, index) => (
-        <div
-          class={`flex flex-col lg:flex-row items-center lg:items-center gap-6 justify-between bg-white border-y first:border-t-0 last:border-b-0 py-6 lg:py-10`}
-          
-        >
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+    {
+      Details.slice(0, 4).map((item) => (
+        <div class="flex flex-col sm:flex-row gap-4 group">
           <img
-            src={data.image}
-            alt={data.alt}
-            class="w-[100%] lg:w-[30%] h-64 lg:h-40 rounded-2xl object-cover"
+            src={item.image}
+            alt={item.alt}
+            class="h-64 aspect-square rounded-xl object-cover"
           />
-
-          <div class="flex w-full lg:w-[70%] flex-row items-center lg:items-center justify-between gap-10 px-2 lg:pl-4">
-            <div class="w-[80%] lg:w-full flex flex-col lg:flex-row lg:items-center justify-between gap-2 lg:gap-10">
-              <div class="lg:w-2/5 flex justify-start lg:justify-start lg:items-center lg:text-left">
-                <h3 class="text-3xl lg:leading-tight lg:text-4xl font-semibold">
-                  {data.title}
-                </h3>
-              </div>
-
-              <div class="lg:w-1/2 flex lg:justify-start lg:items-center text-justify lg:text-justify">
-                <p class="text-gray-600 text-sm mt-2">{data.description}</p>
-              </div>
-            </div>
-
-            <div class="flex items-center text-center justify-center w-10 h-10 bg-blue-100 rounded-full border mx-auto group">
-              <a href={`/${PageName}/${data.slug}`} class="group">
-                <span>
-                  <img
-                    src="/arrowblack.svg"
-                    width="20"
-                    height="20"
-                    alt={`arrowblack ${index}`}
-                    class="transition-transform duration-500 ease-in-out transform group-hover:rotate-[-45deg] group-active:rotate-[-45deg] mb-1 mr-1"
-                  />
-                </span>
-              </a>
-            </div>
+          <div class="space-y-4 py-4">
+            <h3 class="text-3xl lg:leading-tight font-semibold">
+              {item.title}
+            </h3>
+            <p class="text-gray-600 text-sm">{item.description}</p>
+            <a
+              href={`/services/${item.slug}`}
+              class="flex items-center justify-center font-medium group space-x-2 w-fit hover:underline [&_svg]:hover:-rotate-45"
+            >
+              <span>Learn More</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                class="w-4 h-4 invisible group-hover:visible transition-all duration-100"
+                fill="currentColor"
+                viewBox="0 0 256 256"
+              >
+                <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" />
+              </svg>
+            </a>
           </div>
         </div>
-      ))}
-    </div>
+      ))
+    }
   </div>
 </section>

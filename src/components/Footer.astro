@@ -1,93 +1,78 @@
-<!-- Footer -->
-<footer class="bg-[#072F6A] text-white py-8">
-  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-4 gap-6">
-    <!-- Logo and Tagline -->
-    <div class="flex flex-col space-y-4">
-      <h2 class="text-[white] font-bold text-lg">Shivam Febrication</h2>
-      <p class="text-white">The best community for product builders.</p>
-      <div class="flex space-x-3">
-        <!-- WhatsApp -->
-        <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
-          <img src="\whatsapp-svgrepo-com.svg" alt="WhatsApp" class="w-13 h-12">
-        </a>
-        <!-- Twitter -->
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
-          <img src="twittersvg.svg" alt="Twitter" class="w-13 h-12">
-        </a>
-        <!-- Indiamart -->
-        <a href="https://www.indiamart.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
-          <img src="\indiamart-removebg.svg" alt="Indiamart" class="w-13 h-12">
-        </a>
-        <!-- Instagram -->
-        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
-          <img src="\instagram-1-svgrepo-com.svg" alt="Instagram" class="w-13 h-12">
-        </a>
-      </div>
+---
+import { fetchCaseStudies, fetchIndustry, fetchServices } from "../utils/sanityData";
+
+const year = new Date().getFullYear();
+
+const services = await fetchServices();
+const indsutries = await fetchIndustry();
+const caseStudies = await fetchCaseStudies();
+
+const sections = [
+  {
+    title: "Services",
+    links: services.map((service) => ({
+      href: `/services/${service.slug}`,
+      text: service.title,
+    })),
+  },
+  {
+    title: "Industries",
+    links: indsutries.map((industry) => ({
+      href: `/industries/${industry.slug}`,
+      text: industry.title,
+    })),
+  },
+  {
+    title: "Case Studies",
+    links: caseStudies.map((caseStudy) => ({
+      href: `/case-studies/${caseStudy.slug}`,
+      text: caseStudy.title,
+    })),
+  },
+  {
+    title: "Company",
+    links: [
+      { href: "/", text: "Home" },
+      { href: "/about-us", text: "About Us" },
+      { href: "/#contact-us", text: "Contact Us" },
+    ],
+  },
+];
+---
+
+<footer class="bg-blue-950 text-white py-16 mt-16 space-y-16">
+  <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-6">
+    <div class="flex flex-col space-y-4 flex-1">
+      <a href="/" class="block" id="homeLink">
+        <img src="/logo.jpg" alt="Logo" class="h-14 mr-2" />
+      </a>
+      <p class="text-white">
+        Expert fabrication services for your business needs.
+      </p>
     </div>
 
-    <!-- Contact Information -->
-    <div class="flex flex-col space-y-2">
-      <h3 class="text-white font-medium text-lg">Contact Us</h3>
-      <div>
-        <a 
-          href="https://wa.me/919876543210" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          class="text-gray-400 hover:text-white block">
-          Phone: +91 9876543210
-        </a>
-      </div>
-      <div>
-        <a 
-          href="mailto:support@crework.com" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          class="text-gray-400 hover:text-white block">
-          Email: support@crework.com
-        </a>
-      </div>
-      <p class="text-gray-400">Address: 123, Crework Street, Startup City, IN 123456</p>
-      <p class="text-gray-400">GST No: 27AAAAA1234A1Z5</p>
-    </div>
-
-    <!-- Policies -->
-    <div class="flex flex-col space-y-2">
-      <h3 class="text-white font-medium text-lg">Policies</h3>
-      <ul>
-        <li>
-          <a href="#" class="text-gray-400 hover:text-white block">Privacy Policy</a>
-        </li>
-        <li>
-          <a href="#" class="text-gray-400 hover:text-white block">Terms & Conditions</a>
-        </li>
-        <li>
-          <a href="#" class="text-gray-400 hover:text-white block">Refund Policy</a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Pages -->
-    <div class="flex flex-col space-y-2">
-      <h3 class="text-white font-medium text-lg">Pages</h3>
-      <ul>
-        <li>
-          <a href="/" class="text-gray-400 hover:text-white block">Home</a>
-        </li>
-        <li>
-          <a href="/services" class="text-gray-400 hover:text-white block">Services</a>
-        </li>
-        <li>
-          <a href="/industry" class="text-gray-400 hover:text-white block">Industry</a>
-        </li>
-      </ul>
-    </div>
+    {
+      sections.map((section) => (
+        <div class="flex flex-col space-y-2">
+          <h3 class="text-white font-medium text-lg">{section.title}</h3>
+          <ul>
+            {section.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-white/80 hover:text-white hover:underline block"
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
   </div>
 
-  <!-- Divider -->
-  <div class="border-t border-white mt-6 pt-4 w-1/2 mx-auto hidden sm:block"></div>
-
-  <!-- Copyright -->
-  <div class="mt-8 sm:mt-4 text-center text-white text-sm">
-    Copyright © 2024 Shivam Fabrication
+  <div class="text-center text-white text-sm">
+    Copyright © {year} Shivam Fabrication
   </div>
 </footer>

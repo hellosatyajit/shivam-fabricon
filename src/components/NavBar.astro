@@ -1,92 +1,125 @@
-<div class="bg-[#A7C5FB] text-[#072F6A]">
-  <div class="container mx-auto flex justify-between items-center py-4 px-6">
-    <!-- Logo -->
-    <div class="flex items-center">
-      <img src="/logo.png" alt="Logo" class="h-10 mr-2" />
-      <span class="text-lg font-medium">Shivam</span>
-    </div>
+---
+const links = [
+  { href: "/", text: "Home" },
+  { href: "/industries", text: "Industry" },
+  { href: "/case-studies", text: "Case Study" },
+  { href: "/services", text: "Services" },
+  { href: "/about-us", text: "About Us" },
+];
+---
 
-    <!-- Hamburger Icon for Mobile (Hidden on Desktop) -->
-    <button id="hamburgerIcon" class="lg:hidden text-3xl text-[#072F6A]">
-      &#9776;
+<div>
+  <div class="container mx-auto flex justify-between items-center p-4">
+    <a href="/" class="block" id="homeLink">
+      <img src="/logo.jpg" alt="Logo" class="h-14 mr-2" />
+    </a>
+
+    <button id="hamburgerIcon" class="lg:hidden">
+      <svg
+        class="w-5 h-5"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 17 14"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M1 1h15M1 7h15M1 13h15"></path>
+      </svg>
     </button>
 
-    <!-- Navigation Links (Visible on Desktop) -->
     <nav class="hidden lg:flex space-x-6 items-center">
-      <a href="/" class="relative text-base font-medium group hover:text-[#072F6A]" id="homeLink">
-        Home
-        <span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#236CF6] opacity-0 group-hover:opacity-100 lg:block hidden"></span>
-      </a>
-      <a href="/industryPage" class="relative text-base font-medium group hover:text-[#072F6A]" id="industryLink">
-        Industry
-        <span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#236CF6] opacity-0 group-hover:opacity-100 lg:block hidden"></span>
-      </a>
-      <a href="/caseStudyPage" class="relative text-base font-medium group hover:text-[#072F6A]" id="caseStudyLink">
-        Case Study
-        <span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#236CF6] opacity-0 group-hover:opacity-100 lg:block hidden"></span>
-      </a>
-      <a href="/servicesPage" class="relative text-base font-medium group hover:text-[#072F6A]" id="servicesLink">
-        Services
-        <span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#236CF6] opacity-0 group-hover:opacity-100 lg:block hidden"></span>
-      </a>
-      <a href="/aboutUs" class="relative text-base font-medium group hover:text-[#072F6A]" id="aboutUsLink">
-        About Us
-        <span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#236CF6] opacity-0 group-hover:opacity-100 lg:block hidden"></span>
-      </a>
-      <a href="#ContactUs" class="text-base font-medium text-[#A7C5FB] bg-[#072F6A] py-2 px-6 rounded-lg flex justify-center items-center">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="hover:underline hover:text-blue-900 font-medium"
+          >
+            {" "}
+            {link.text}{" "}
+          </a>
+        ))
+      }
+      <a
+        href="/#contact-us"
+        class="focus:ring-4 focus:ring-blue-700 focus:outline-none text-white bg-blue-900 hover:bg-blue-950 transition-colors font-medium duration-300 px-6 py-3 rounded-full flex justify-center items-center"
+      >
         Get In Touch
       </a>
     </nav>
   </div>
 </div>
 
-<!-- Mobile Menu -->
-<div id="mobileNavMenu" class="lg:hidden fixed top-0 right-0 bottom-0 bg-[#A7C5FB] bg-opacity-100 z-[900] hidden w-[100%] h-[100vh] flex flex-col justify-between">
-  <div class="flex justify-end p-6">
-    <button id="closeMenu" class="text-[#236CF6] text-3xl">&times;</button>
+<div
+  id="mobileNavMenu"
+  class="hidden lg:hidden bg-white fixed inset-0 top-[142px] bg-opacity-100 z-[900] flex flex-col justify-between p-6 text-base"
+>
+  <ul class="flex font-medium flex-col gap-2 flex-1">
+    {
+      links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class="block py-2 pr-4 pl-3 text-blue-900 border-blue-900 sm:p-0 border-l-[3px]"
+          >
+            {link.text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <div>
+    <a
+      href="/#contact-us"
+      class="focus:ring-4 focus:ring-blue-700 focus:outline-none font-medium text-center text-white bg-blue-900 hover:bg-blue-950 w-full block px-6 py-3 rounded-full"
+    >
+      Get in touch
+    </a>
   </div>
-  <div class="flex flex-col items-start space-y-6 px-6 py-4 w-full h-full overflow-y-auto flex-grow">
-    <a href="/" class="relative text-xl font-medium group text-[#236CF6] hover:text-[#072F6A]" id="mobileHomeLink">
-      Home
-    </a>
-    <a href="/industryPage" class="relative text-xl font-medium group text-[#236CF6] hover:text-[#072F6A]" id="mobileIndustryLink">
-      Industry
-    </a>
-    <a href="/caseStudyPage" class="relative text-xl font-medium group text-[#236CF6] hover:text-[#072F6A]" id="mobileCaseStudyLink">
-      Case Study
-    </a>
-    
-    <a href="/servicesPage" class="relative text-xl font-medium group text-[#236CF6] hover:text-[#072F6A]" id="mobileServicesLink">
-      Services
-    </a>
-    <a href="/aboutUs" class="relative text-xl font-medium group text-[#236CF6] hover:text-[#072F6A]" id="mobileAboutUsLink">
-      About Us
-    </a>
-    <a href="#ContactUs" class="relative text-xl font-medium group text-[#236CF6] hover:text-[#072F6A]" id="mobileContactUsLink">
-      Contact Us
-    </a>
-  </div>
-
-  <!-- Get in Touch Button at the Bottom -->
-  <a href="#ContactUs" class="text-xl font-medium group text-white bg-[#072F6A] py-2 px-6 rounded-none text-center mb-6 mx-4">
-    Get In Touch
-  </a>
 </div>
 
 <script>
-  const hamburgerIcon = document.getElementById('hamburgerIcon');
-  const mobileNavMenu = document.getElementById('mobileNavMenu');
-  const closeMenu = document.getElementById('closeMenu');
-  
-  if (hamburgerIcon && mobileNavMenu && closeMenu) {
-    hamburgerIcon.addEventListener('click', () => {
-      mobileNavMenu.classList.toggle('hidden');
-      document.body.style.overflow = mobileNavMenu.classList.contains('hidden') ? 'auto' : 'hidden'; // Disable scrolling on body
+  const hamburgerIcon = document.getElementById("hamburgerIcon");
+  const mobileNavMenu = document.getElementById("mobileNavMenu");
+
+  if (hamburgerIcon && mobileNavMenu) {
+    hamburgerIcon.addEventListener("click", () => {
+      mobileNavMenu.classList.toggle("hidden");
+      document.body.style.overflow = mobileNavMenu.classList.contains("hidden")
+        ? "auto"
+        : "hidden";
+      document.body.style.height = mobileNavMenu.classList.contains("hidden")
+        ? "auto"
+        : "100%";
+      hamburgerIcon.innerHTML = mobileNavMenu.classList.contains("hidden")
+        ? `<svg
+          class="w-5 h-5"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 17 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15"
+          ></path>
+        </svg>
+      `
+        : `<svg
+      class="w-5 h-5"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 384 512"
+    >
+      <path
+        d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+      ></path>
+    </svg>`;
     });
 
-    closeMenu.addEventListener('click', () => {
-      mobileNavMenu.classList.add('hidden');
-      document.body.style.overflow = 'auto'; // Re-enable scrolling on body
-    });
   }
 </script>
