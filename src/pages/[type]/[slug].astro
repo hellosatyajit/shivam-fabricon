@@ -14,16 +14,13 @@ interface DataItem {
   images: Array<{ src: string; alt?: string }>;
 }
 
-console.log("Astro.params:", Astro.params);
-
 let data: DataItem[] = [];
 const { type, slug } = Astro.params;
 
 try {
-  // Fetch data based on type
   if (type === "services") {
     data = await fetchServices();
-  } else if (type === "caseStudies") {
+  } else if (type === "case-studies") {
     data = await fetchCaseStudies();
   } else if (type === "industries") {
     data = await fetchIndustry();
@@ -34,7 +31,6 @@ try {
   console.error(`Error fetching ${type || "data"}:`, error);
 }
 
-// Find the specific item by slug
 const item = data.find((d) => d.slug === slug);
 
 if (!item) {
@@ -42,7 +38,6 @@ if (!item) {
   throw new Error(`${typeName} with slug "${slug}" not found`);
 }
 
-// Generate static paths for all types
 export async function getStaticPaths() {
   let paths: { params: { type: string; slug: string } }[] = [];
   try {
@@ -54,7 +49,7 @@ export async function getStaticPaths() {
 
     paths = [
       ...services.map((service) => ({ params: { type: "services", slug: service.slug } })),
-      ...caseStudies.map((caseStudy) => ({ params: { type: "caseStudies", slug: caseStudy.slug } })),
+      ...caseStudies.map((caseStudy) => ({ params: { type: "case-studies", slug: caseStudy.slug } })),
       ...industries.map((industry) => ({ params: { type: "industries", slug: industry.slug } })),
     ];
   } catch (error) {
@@ -65,6 +60,6 @@ export async function getStaticPaths() {
 }
 ---
 
-<Layout>
+<Layout title={item.title} url={`/${type}/${slug}`}>
   <DetailedComponent data={item} client:load />
 </Layout>

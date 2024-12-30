@@ -1,10 +1,11 @@
 ---
 import { fetchServices } from "../utils/sanityData";
 import Layout from "../layouts/Layout.astro";
-import PageFullData from "../components/PageFullData.astro"
+import PageFullData from "../components/PageFullData.astro";
+
 const services = await fetchServices();
 
-const serviceDetails = services.map((service) => ({
+const servicesItems = services.map((service) => ({
   title: service.title,
   description: service.description,
   image: service.images[0]?.src || "",
@@ -15,16 +16,15 @@ const serviceDetails = services.map((service) => ({
 const {
   heading = "Providing Best Services",
   subheading = "We are dedicated to providing the best services in the sustainability manufacturing industry. Our commitment to excellence is reflected in our innovative practices, cutting-edge technology, and a passionate team of experts.",
-  Type="services",
+  category = "services",
 } = Astro.props;
-
 ---
 
-<Layout>
-<PageFullData
-  heading={heading}
-  subheading={subheading}
-  Details={serviceDetails}
-  PageName={Type}
-/>
+<Layout title="Services" url="/services">
+  <PageFullData
+    heading={heading}
+    subheading={subheading}
+    items={servicesItems}
+    category={category}
+  />
 </Layout>

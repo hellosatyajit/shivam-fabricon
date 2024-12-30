@@ -6,9 +6,9 @@ export default {
 			inter: ['Inter', 'sans-serif'],
 		  },},
 		  screens: {
-			sm: '640px', // Small devices
-			md: '768px', // Medium devices
-			lg: '1024px', // Large devices
+			sm: '640px',
+			md: '768px',
+			lg: '1024px',
 			xl: '1280px',
 		  },
 	},

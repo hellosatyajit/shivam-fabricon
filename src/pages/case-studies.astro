@@ -1,16 +1,14 @@
 ---
-
 import Layout from "../layouts/Layout.astro";
 import { fetchCaseStudies } from "../utils/sanityData";
 import PageFullData from "../components/PageFullData.astro";
 
-const caseStudies = await fetchCaseStudies(); 
+const caseStudies = await fetchCaseStudies();
 
-
-const data = caseStudies.map((caseStudy) => ({
+const caseStudyItems = caseStudies.map((caseStudy) => ({
   title: caseStudy.title,
   description: caseStudy.description,
-  slug: caseStudy.slug, 
+  slug: caseStudy.slug,
   image: caseStudy.images[0]?.src || "",
   alt: caseStudy.images[0]?.alt || "Default alt text",
 }));
@@ -18,14 +16,15 @@ const data = caseStudies.map((caseStudy) => ({
 const {
   heading = "Case Studies",
   subheading = "Discover real-world success stories that showcase our expertise, innovative solutions, and the impact we've created across various projects and industries.",
-  Type="caseStudies"
+  category = "case-studies",
 } = Astro.props;
 ---
-<Layout>
+
+<Layout title="Case Studies" url="/case-studies">
   <PageFullData
     heading={heading}
     subheading={subheading}
-    Details={data}
-    PageName={Type}
+    items={caseStudyItems}
+    category={category}
   />
-  </Layout>
+</Layout>

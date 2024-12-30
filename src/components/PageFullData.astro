@@ -2,8 +2,8 @@
 export interface Props {
   heading: string;
   subheading: string;
-  PageName: string;
-  Details: {
+  category: string;
+  items: {
     title: string;
     description: string;
     image: string;
@@ -12,7 +12,7 @@ export interface Props {
   }[];
 }
 
-const { heading, subheading, Details, PageName } = Astro.props;
+const { heading, subheading, items, category } = Astro.props;
 ---
 
 <section class="py-16 px-4 container mx-auto space-y-16">
@@ -27,7 +27,7 @@ const { heading, subheading, Details, PageName } = Astro.props;
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
     {
-      Details.slice(0, 4).map((item) => (
+      items.slice(0, 4).map((item) => (
         <div class="flex flex-col sm:flex-row gap-4 group">
           <img
             src={item.image}
@@ -40,7 +40,7 @@ const { heading, subheading, Details, PageName } = Astro.props;
             </h3>
             <p class="text-gray-600 text-sm">{item.description}</p>
             <a
-              href={`/services/${item.slug}`}
+              href={`/${category}/${item.slug}`}
               class="flex items-center justify-center font-medium group space-x-2 w-fit hover:underline [&_svg]:hover:-rotate-45"
             >
               <span>Learn More</span>

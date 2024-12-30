@@ -6,10 +6,9 @@ const DetailComponent = ({ data }) => {
   const [imagesInModal, setImagesInModal] = useState([]);
 
   const openModal = (images, index) => {
-    console.log("Opening modal with images:", images, "at index:", index);
-    setImagesInModal(images); 
-    setCurrentImageIndex(index); 
-    setModalOpen(true); 
+    setImagesInModal(images);
+    setCurrentImageIndex(index);
+    setModalOpen(true);
   };
 
   const closeModal = () => {
@@ -19,7 +18,7 @@ const DetailComponent = ({ data }) => {
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex < imagesInModal.length - 1 ? prevIndex + 1 : 0
-    ); 
+    );
   };
 
   const prevImage = () => {
@@ -28,59 +27,49 @@ const DetailComponent = ({ data }) => {
     );
   };
 
-  const items = Array.isArray(data) ? data : [data];
-
   return (
-    <section className="py-0">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-14">
-        {items.map((item, index) => (
-          <div key={index} className="cursor-pointer py-12 border-y" id={item.slug}>
-            {/* Title and Description */}
-            <div className="flex flex-col lg:flex-row pb-6 justify-between items-center">
-              <h1 className="lg:w-64 text-4xl lg:text-5xl text-center lg:text-left font-bold text-gray-900 mb-4">
-                {item.title}
-              </h1>
-              <p className="text-gray-600 text-center font-medium lg:text-justify lg:max-w-lg">
-                {item.description}
-              </p>
-            </div>
-
-            {/* Image Gallery */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {Array.isArray(item.images) ? (
-                item.images.map((img, imgIndex) => (
-                  <div
-                    key={imgIndex}
-                    className="flex items-center justify-center border bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                    onClick={() =>
-                      openModal(item.images.map((img) => img.src), imgIndex)
-                    }
-                  >
-                    <img
-                      src={img.src}
-                      alt={img.alt || `Image for ${item.title}`}
-                      className="object-cover rounded-lg w-full h-40 lg:h-48 hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                ))
-              ) : (
-                <div
-                  className="flex items-center justify-center border bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                  onClick={() => openModal([item.images], 0)}
-                >
-                  <img
-                    src={item.images.src}
-                    alt={item.images.alt || `Image for ${item.title}`}
-                    className="object-cover rounded-lg w-full h-64 lg:h-80 hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
+    <section className="container mx-auto px-4 py-16">
+      <div class="space-y-2 col-span-6 mb-16">
+        <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 lg:mb-0 mb-4">
+          {data.title}
+        </h1>
+        <p class="text-gray-600 lg:max-w-lg">{data.description}</p>
       </div>
 
-      {/* Modal for fullscreen image */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {Array.isArray(data.images) ? (
+          data.images.map((img, imgIndex) => (
+            <div
+              key={imgIndex}
+              className="flex items-center justify-center border bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() =>
+                openModal(
+                  data.images.map((img) => img.src),
+                  imgIndex
+                )
+              }
+            >
+              <img
+                src={img.src}
+                alt={data.alt || `Image for ${data.title}`}
+                className="object-cover rounded-lg w-full h-40 lg:h-48 hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          ))
+        ) : (
+          <div
+            className="flex items-center justify-center border bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            onClick={() => openModal([item.images], 0)}
+          >
+            <img
+              src={data.images.src}
+              alt={data.images.alt || `Image for ${data.title}`}
+              className="object-cover rounded-lg w-full h-64 lg:h-80 hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+        )}
+      </div>
+
       {isModalOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
@@ -90,7 +79,6 @@ const DetailComponent = ({ data }) => {
             className="relative bg-white rounded-lg w-[70%] h-[70%] max-w-4xl max-h-4xl flex items-center justify-center overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
             <button
               className="absolute top-2 right-2 text-white bg-[#072F6A] rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-800"
               onClick={closeModal}
@@ -98,7 +86,6 @@ const DetailComponent = ({ data }) => {
               ✕
             </button>
 
-            {/* Left Arrow */}
             <button
               className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300"
               onClick={prevImage}
@@ -106,7 +93,6 @@ const DetailComponent = ({ data }) => {
               <img src="/leftarrowgallery.svg" alt="Previous" />
             </button>
 
-            {/* Gallery Image */}
             <img
               src={imagesInModal[currentImageIndex]}
               alt="Gallery Image"
@@ -114,7 +100,6 @@ const DetailComponent = ({ data }) => {
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
 
-            {/* Right Arrow */}
             <button
               className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300"
               onClick={nextImage}

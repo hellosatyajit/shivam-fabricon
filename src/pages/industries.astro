@@ -1,14 +1,14 @@
 ---
-
 import Layout from "../layouts/Layout.astro";
-import { fetchIndustry } from "../utils/sanityData"; 
+import { fetchIndustry } from "../utils/sanityData";
 import PageFullData from "../components/PageFullData.astro";
-const industrydata = await fetchIndustry();  
 
-const data = industrydata.map((industry) => ({
+const industrydata = await fetchIndustry();
+
+const industryItems = industrydata.map((industry) => ({
   title: industry.title,
   description: industry.description,
-  slug: industry.slug, 
+  slug: industry.slug,
   image: industry.images[0]?.src || "",
   alt: industry.images[0]?.alt || "Default alt text",
 }));
@@ -16,17 +16,15 @@ const data = industrydata.map((industry) => ({
 const {
   heading = "Industries",
   subheading = "Tailored solutions to meet the unique demands of diverse industries, driving innovation and excellence in every field we serve.",
-  Type="industries",
+  category = "industries",
 } = Astro.props;
 ---
 
-  
-<Layout>
+<Layout title="Industries" url="/industries">
   <PageFullData
     heading={heading}
     subheading={subheading}
-    Details={data}
-    PageName={Type}
+    items={industryItems}
+    category={category}
   />
-  </Layout>
-  
+</Layout>

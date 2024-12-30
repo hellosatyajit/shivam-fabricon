@@ -3,10 +3,15 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SEO from "../components/SEO.astro";
 
+const { title, description, url } = Astro.props;
+
+const makeTitle = title ? title + " | " + "Shivam Fabricon" : "Shivam Fabricon";
+
 const seoData = {
-  title: "Shivam Fabrication",
-  description: "Expert fabrication services for your business needs.",
-  url: "https://shivamfabricon.in",
+  title: makeTitle,
+  description:
+    description ?? "Expert fabrication services for your business needs.",
+  url: "https://shivamfabricon.in" + url,
   keywords: "fabrication, metalwork, custom solutions",
 };
 ---
@@ -18,19 +23,115 @@ const seoData = {
     <meta name="viewport" content="width=device-width" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <SEO {...seoData} />
-    <link rel="icon" type="image/svg+xml" href="/SF_Logo.png" />
+    <link rel="icon" type="image/svg+xml" href="/logo.png" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <meta name="generator" content={Astro.generator} />
-    <title>{seoData.title}</title>
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <title>{makeTitle}</title>
   </head>
   <body class="font-inter">
     <Header />
     <slot />
     <Footer />
-  </body>
+  </body><script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Shivam Fabricon",
+      "url": "https://shivamfabricon.in",
+      "logo": "https://shivamfabricon.in/logo.jpg",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91 97125 49222",
+        "contactType": "Customer Service",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Shivam Fabricon, Silver Oak College, SG Highway",
+        "addressLocality": "Ahmedabad",
+        "addressRegion": "Gujarat",
+        "addressCountry": "India"
+      },
+      "openingHours": "Mo-Fr 09:00-19:00",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "300"
+      },
+      "description": "Expert fabrication services for your business needs. Engineering, Procurement, and Construction solutions for sustainable industries.",
+      "foundingDate": "2012",
+      "founders": [
+        {
+          "@type": "Person",
+          "name": "Your Founder Name"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Innovative Solutions",
+            "description": "Stainless steel-based products, including grills, gates, railings, and hotel equipment."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mounting & Installation Services",
+            "description": "Expert fitting and finishing for flawless implementation."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Creative Design Works",
+            "description": "Machine-cut stainless steel features for modern interior and exterior aesthetics."
+          }
+        }
+      ],
+      "department": {
+        "@type": "Organization",
+        "name": "Shivam Fabricon",
+        "numberOfEmployees": "10+",
+        "award": "3000+ Designs and 606+ Completed Projects"
+      },
+      "hasPart": [
+        {
+          "@type": "WebPage",
+          "name": "Industries",
+          "url": "https://shivamfabricon.in/industries"
+        },
+        {
+          "@type": "WebPage",
+          "name": "Case Studies",
+          "url": "https://shivamfabricon.in/case-studies"
+        },
+        {
+          "@type": "WebPage",
+          "name": "Services",
+          "url": "https://shivamfabricon.in/services"
+        },
+        {
+          "@type": "WebPage",
+          "name": "About Us",
+          "url": "https://shivamfabricon.in/about"
+        },
+        {
+          "@type": "WebPage",
+          "name": "Contact Us",
+          "url": "https://shivamfabricon.in/contact"
+        }
+      ]
+    }
+  </script>
 </html>
 
 <style>

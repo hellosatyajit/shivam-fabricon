@@ -5,14 +5,11 @@ import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  integrations: [
-    react(), 
-    tailwind(), 
-    vercel() 
-  ],
-
+  site: "https://shivamfabricon.in",
+  integrations: [react(), tailwind(), vercel(), sitemap()],
   server: {
     host: true, 
   }
