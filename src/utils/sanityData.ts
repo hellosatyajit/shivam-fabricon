@@ -176,3 +176,33 @@ export async function fetchIndustry(): Promise<Industry[]> {
     })) || []
   );
 }
+
+export interface HeroImage {
+  src: string;
+  alt: string;
+}
+
+export interface Hero {
+  image: HeroImage;
+}
+export async function fetchHeroImage(): Promise<Hero[]> {
+ 
+  const data = await SanityDatabase.fetch(`
+    *[_type == "heroImage"][0]{
+      image {
+        _type == "image" => {
+          "src": asset->url,
+          "alt": alt
+        }
+      }
+    }
+  `);
+
+  
+  return data ? [{
+    image: {
+      src: data.image?.src,
+      alt: data.image?.alt || "Hero Image" 
+    }
+  }] : [];
+}
