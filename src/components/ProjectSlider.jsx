@@ -4,7 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 const SLIDE_DURATION = 5000;
 const PROGRESS_UPDATE_INTERVAL = 100;
 
-export default function TestimonialCarousel({ caseStudies }) {
+export default function TestimonialCarousel({ projects }) {
+  // Filter out projects with isFeature true, and limit to 3 items
+  const featuredProjects = projects.filter(project => project.isFeature).slice(0, 3);
+  console.log(featuredProjects);
+  
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
 
@@ -28,7 +33,7 @@ export default function TestimonialCarousel({ caseStudies }) {
       }, PROGRESS_UPDATE_INTERVAL);
 
       timer = setTimeout(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % caseStudies.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % featuredProjects.length);
       }, SLIDE_DURATION);
     };
 
@@ -38,7 +43,7 @@ export default function TestimonialCarousel({ caseStudies }) {
       clearTimeout(timer);
       clearInterval(progressTimer);
     };
-  }, [currentIndex]);
+  }, [currentIndex, featuredProjects.length]);
 
   return (
     <div className="w-full max-w-5xl mx-auto">
@@ -55,14 +60,14 @@ export default function TestimonialCarousel({ caseStudies }) {
                 className="h-72 md:h-96 space-y-2"
               >
                 <h3 className="text-2xl font-semibold">
-                  {caseStudies[currentIndex].title}
+                  {featuredProjects[currentIndex].title}
                 </h3>
                 <p className="text-gray-600 pb-4 md:pb-8">
-                  "{caseStudies[currentIndex].description}"
+                  "{featuredProjects[currentIndex].shortDescription}"
                 </p>
                 <a
                   className="flex items-center justify-center font-medium bg-blue-900 text-white px-6 py-3 rounded-full hover:bg-blue-950 space-x-2 group w-fit"
-                  href={`/services/${caseStudies[currentIndex].slug}`}
+                  href={`/projects/${featuredProjects[currentIndex].slug}`}
                 >
                   <span>Learn More</span>
                   <svg
@@ -84,8 +89,8 @@ export default function TestimonialCarousel({ caseStudies }) {
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentIndex}
-                src={caseStudies[currentIndex].image}
-                alt={caseStudies[currentIndex].title}
+                src={featuredProjects[currentIndex].image}
+                alt={featuredProjects[currentIndex].title}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -98,8 +103,8 @@ export default function TestimonialCarousel({ caseStudies }) {
       </div>
 
       <div className="flex justify-between gap-4 md:w-3/4 m-auto mt-5">
-        {caseStudies
-          .map((caseStudy) => caseStudy.projectType)
+        {featuredProjects
+          .map((projects) => projects.projectType)
           .map((label, index) => (
             <div key={index} className="flex-1 space-y-2">
               <div className="h-1 rounded-full bg-gray-200 overflow-hidden">

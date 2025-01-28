@@ -5,7 +5,8 @@ export interface Props {
   category: string;
   items: {
     title: string;
-    description: string;
+    shortDescription: string;
+    
     image: string;
     alt: string;
     slug: string;
@@ -27,7 +28,7 @@ const { heading, subheading, items, category } = Astro.props;
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
     {
-      items.slice(0, 4).map((item) => (
+      items.map((item) => (
         <div class="flex flex-col sm:flex-row gap-4 group">
           <img
             src={item.image}
@@ -38,7 +39,8 @@ const { heading, subheading, items, category } = Astro.props;
             <h3 class="text-3xl lg:leading-tight font-semibold">
               {item.title}
             </h3>
-            <p class="text-gray-600 text-sm">{item.description}</p>
+            <p class="text-gray-600 text-sm">{item.shortDescription}</p>
+           
             <a
               href={`/${category}/${item.slug}`}
               class="flex items-center justify-center font-medium group space-x-2 w-fit hover:underline [&_svg]:hover:-rotate-45"

@@ -1,0 +1,26 @@
+---
+import { fetchProjects} from "../utils/sanityData";
+import ProjectSlider from "../components/ProjectSlider";
+
+const projects= await fetchProjects();
+
+
+const formattedProjects= projects.map((projects) => ({
+  title: projects.title,
+  shortDescription: projects.shortDescription,
+  isFeature:projects.isFeature,
+  slug: projects.slug,
+  image: projects.images[0]?.src || "",
+  projectType: projects.projectType || "Project Type",
+}));
+---
+
+<section class="py-16 px-4">
+  <div class="text-center mb-12">
+    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 lg:mb-0 mb-4">
+      Solving Problems,
+      <br /><span class="text-blue-900">Delivering Results</span>
+    </h2>
+  </div>
+  <ProjectSlider projects={formattedProjects} client:load />
+</section>

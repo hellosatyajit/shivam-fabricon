@@ -1,3 +1,4 @@
+import { video } from "framer-motion/client";
 import SanityDatabase from "./sanityClient";
 
 export interface Client {
@@ -56,7 +57,10 @@ export interface ServiceImage {
 export interface Service {
   title: string;
   slug: string;
-  description: string;
+  shortDescription: string;
+  longDescription: string;
+  isFeature:boolean;
+  videoUrl:string;
   images: ServiceImage[];
 }
 
@@ -65,7 +69,10 @@ export async function fetchServices(): Promise<Service[]> {
     *[_type == "services"]{
       title,
       "slug": slug.current, 
-      description,
+      shortDescription,
+      longDescription,
+      isFeature,
+      videoUrl,
       images[] {
         
         _type == "image" => {
@@ -80,7 +87,10 @@ export async function fetchServices(): Promise<Service[]> {
     data.map((service: any) => ({
       title: service.title,
       slug: service.slug,
-      description: service.description,
+      shortDescription: service.shortDescription,
+      longDescription:service.longDescription,
+      isFeature:service.isFeature,
+      videoUrl:service.videoUrl,
       images:
         service.images?.map((image: any) => ({
           src: image.src,
@@ -91,48 +101,84 @@ export async function fetchServices(): Promise<Service[]> {
 }
 
 //fetch the casestudt data
-export interface CaseStudyImage {
+export interface ProjectsImage {
   src: string;
   alt: string;
 }
 
-export interface CaseStudy {
-  title: string;
-  slug: string;
-  description: string;
-  images: CaseStudyImage[];
-  projectType: string;
+export interface Testimonial {
+  name: string;
+  role: string;
+  message: string;
+  imageSrc: string;  // Image URL for the testimonial
+  date: string;      // Date when the testimonial was given
 }
 
-export async function fetchCaseStudies(): Promise<CaseStudy[]> {
+export interface Projects {
+  title: string;
+  slug: string;
+  shortDescription: string;
+  longDescription: string;
+  isFeature: boolean;
+  videoUrl: string;
+  images: ProjectsImage[];
+  projectType: string;
+  testimonials: Testimonial[];  // Array of testimonials
+}
+
+
+export async function fetchProjects(): Promise<Projects[]> {
   const data = await SanityDatabase.fetch(`
-    *[_type == "caseStudy"]{
-      title,
-      "slug": slug.current, 
-      description,       
-       projectType,
-      images[] {
-        _type == "image" => {
-          "src": asset->url,
-          "alt": alt
-        }
-      },
+   *[_type == "Projects"]{
+  title,
+  "slug": slug.current,
+  shortDescription,
+  longDescription,
+  isFeature,
+  videoUrl,
+  projectType,
+  images[] {
+    _type == "image" => {
+      "src": asset->url,
+      "alt": alt
     }
+  },
+  testimonials[] {
+    name,
+    role,
+    message,
+    "imageSrc": image.asset->url, // Fetching the image URL
+    date
+  }
+}
+
   `);
 
   return (
-    data.map((caseStudy: any) => ({
-      title: caseStudy.title,
-      slug: caseStudy.slug,
-      description: caseStudy.description,
-      projectType: caseStudy.projectType,
+    data.map((project: any) => ({
+      title: project.title,
+      slug: project.slug,
+      shortDescription: project.shortDescription,
+      longDescription: project.longDescription,
+      isFeature: project.isFeature,
+      videoUrl: project.videoUrl,
+      projectType: project.projectType,
       images:
-        caseStudy.images?.map((image: any) => ({
+        project.images?.map((image: any) => ({
           src: image.src,
           alt: image.alt || "No description available",
         })) || [],
+      testimonials: 
+        project.testimonials?.map((testimonial: any) => ({
+          name: testimonial.name,
+          role: testimonial.role,
+          message: testimonial.message,
+          imageSrc: testimonial.imageSrc || "", 
+          date: testimonial.date,
+        })) || [], 
     })) || []
   );
+  
 }
 
 //fetch the industry data
@@ -144,7 +190,10 @@ export interface IndustryImage {
 export interface Industry {
   title: string;
   slug: string;
-  description: string;
+  shortDescription: string;
+  longDescription:string;
+  videoUrl:string;
+  isFeature:boolean;
   images: IndustryImage[];
 }
 
@@ -153,7 +202,10 @@ export async function fetchIndustry(): Promise<Industry[]> {
     *[_type == "Industry"]{
       title,
       "slug": slug.current,
-      description,
+      shortDescription,
+      longDescription,
+      videoUrl,
+      isFeature,
       images[] {
         _type == "image" => {
           "src": asset->url,
@@ -167,7 +219,10 @@ export async function fetchIndustry(): Promise<Industry[]> {
     data.map((industry: any) => ({
       title: industry.title,
       slug: industry.slug,
-      description: industry.description,
+      shortDescription: industry.shortDescription,
+      longDescription:industry.longDescription,
+      videoUrl:industry.videoUrl,
+      isFeature:industry.isFeature,
       images:
         industry.images?.map((image: any) => ({
           src: image.src,

@@ -3,14 +3,17 @@ import Layout from "../../layouts/Layout.astro";
 import DetailedComponent from "../../components/DetailComponent";
 import {
   fetchServices,
-  fetchCaseStudies,
+  fetchProjects,
   fetchIndustry,
 } from "../../utils/sanityData";
 
 interface DataItem {
   slug: string;
   title: string;
-  description: string;
+  shortDescription: string;
+  longDescription:string;
+  videoUrl:string;
+  isFeature:boolean;
   images: Array<{ src: string; alt?: string }>;
 }
 
@@ -20,8 +23,8 @@ const { type, slug } = Astro.params;
 try {
   if (type === "services") {
     data = await fetchServices();
-  } else if (type === "case-studies") {
-    data = await fetchCaseStudies();
+  } else if (type === "projects") {
+    data = await fetchProjects();
   } else if (type === "industries") {
     data = await fetchIndustry();
   } else {
@@ -41,15 +44,15 @@ if (!item) {
 export async function getStaticPaths() {
   let paths: { params: { type: string; slug: string } }[] = [];
   try {
-    const [services, caseStudies, industries] = await Promise.all([
+    const [services, Projects, industries] = await Promise.all([
       fetchServices(),
-      fetchCaseStudies(),
+      fetchProjects(),
       fetchIndustry(),
     ]);
 
     paths = [
       ...services.map((service) => ({ params: { type: "services", slug: service.slug } })),
-      ...caseStudies.map((caseStudy) => ({ params: { type: "case-studies", slug: caseStudy.slug } })),
+      ...Projects.map((projects) => ({ params: { type: "projects", slug: projects.slug } })),
       ...industries.map((industry) => ({ params: { type: "industries", slug: industry.slug } })),
     ];
   } catch (error) {
