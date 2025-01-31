@@ -5,9 +5,10 @@ import PageFullData from "../components/PageFullData.astro";
 
 const services = await fetchServices();
 
+
 const servicesItems = services.map((service) => ({
   title: service.title,
-  description: service.description,
+  shortDescription: service.shortDescription,
   image: service.images[0]?.src || "",
   alt: service.images[0]?.alt || "Default alt text",
   slug: service.slug,

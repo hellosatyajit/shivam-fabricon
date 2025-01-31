@@ -7,7 +7,7 @@ const industrydata = await fetchIndustry();
 
 const industryItems = industrydata.map((industry) => ({
   title: industry.title,
-  description: industry.description,
+  shortDescription: industry.shortDescription,
   slug: industry.slug,
   image: industry.images[0]?.src || "",
   alt: industry.images[0]?.alt || "Default alt text",

@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { fetchProjects } from "../utils/sanityData";
+import PageFullData from "../components/PageFullData.astro";
+
+const projects = await fetchProjects();
+
+
+const projectsItems = projects.map((project) => ({
+  title: project.title,
+  shortDescription: project.shortDescription,
+  slug: project.slug,
+  image: project.images[0]?.src || "",
+  alt: project.images[0]?.alt || "Default alt text",
+  testimonials: project.testimonials?.map((testimonial) => ({
+    name: testimonial.name,
+    role: testimonial.role,
+    message: testimonial.message,
+    imageSrc: testimonial.imageSrc || "", // Default empty string if no image
+    date: testimonial.date,
+  })) || [], // If no testimonials, return an empty array
+}));
+
+
+
+const {
+  heading = "Projects",
+  subheading = "Discover real-world success stories that showcase our expertise, innovative solutions, and the impact we've created across various projects and industries.",
+  category = "projects",
+} = Astro.props;
+
+
+---
+
+<Layout title="projects" url="/projects">
+  <PageFullData
+    heading={heading}
+    subheading={subheading}
+    items={projectsItems}
+    category={category}
+  />
+</Layout>

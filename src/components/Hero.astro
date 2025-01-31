@@ -1,3 +1,13 @@
+---
+ 
+import { fetchHeroImage } from '../utils/sanityData'; 
+
+
+const heroData = await fetchHeroImage();
+const heroImageUrl = heroData[0]?.image?.src;
+const heroImageAlt = heroData[0]?.image?.alt
+
+---
 <main class="container mx-auto grid md:grid-cols-12 py-10 md:py-16 gap-10">
   <div class="md:col-span-7 flex flex-col gap-4 justify-center px-4">
     <div
@@ -23,11 +33,10 @@
     </div>
 
     <h1 class="text-5xl lg:text-7xl font-bold leading-none text-gray-900">
-      Engineering for Sustainable Future
+     Your Trusted Fabrication Partner
     </h1>
     <p class="text-gray-700 font-medium leading-snug max-w-96">
-      Discover how our innovative EPC solutions are transforming industries and
-      creating a more sustainable world creating a more sustainable world.
+      We provide reliable and high-quality fabrication services tailored to your needs. Trust us to bring your vision to life with precision and durability.
     </p>
     <a
       class="focus:ring-4 focus:ring-blue-700 focus:outline-none flex items-center justify-center font-medium bg-blue-900 text-white px-6 py-3 rounded-full hover:bg-blue-950 space-x-2 sm:w-fit group mt-4"
@@ -47,7 +56,7 @@
       >
     </a>
 
-    <div class="flex justify-center lg:justify-start space-x-4">
+    <div class="flex space-x-4">
       {
         ["Engineering", "Construction", "Procurement"].map((item) => (
           <span class="flex items-center text-sm text-gray-600">
@@ -67,9 +76,9 @@
 
   <div class="md:col-span-5 md:px-4">
     <img
-      src="/HeroImg.png"
+      src={heroImageUrl}
       class="w-full aspect-square object-cover object-center md:rounded-3xl shadow-lg"
-      alt="Image description"
+      alt={heroImageAlt}
     />
   </div>
 </main>

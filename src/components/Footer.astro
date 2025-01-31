@@ -1,11 +1,11 @@
 ---
-import { fetchCaseStudies, fetchIndustry, fetchServices } from "../utils/sanityData";
+import { fetchProjects, fetchIndustry, fetchServices } from "../utils/sanityData";
 
 const year = new Date().getFullYear();
 
 const services = await fetchServices();
 const indsutries = await fetchIndustry();
-const caseStudies = await fetchCaseStudies();
+const projects = await fetchProjects();
 
 const sections = [
   {
@@ -23,10 +23,10 @@ const sections = [
     })),
   },
   {
-    title: "Case Studies",
-    links: caseStudies.map((caseStudy) => ({
-      href: `/case-studies/${caseStudy.slug}`,
-      text: caseStudy.title,
+    title: "Projects",
+    links: projects.map((projects) => ({
+      href: `/projects/${projects.slug}`,
+      text: projects.title,
     })),
   },
   {

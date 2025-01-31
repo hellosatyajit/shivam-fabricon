@@ -1,63 +1,29 @@
 ---
-const mainsFeatures = [
-  {
-    title: "Innovative Solutions",
-    description:
-      "Explore a diverse range of stainless steel-based products, including grills, gates, railings, hotel equipment, banners, and more, designed to perfection.",
-    icon: `<svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="32"
-        height="32"
-        fill="#000000"
-        viewBox="0 0 256 256"
-      >
-        <path d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z" fill="currentColor"></path>
-      </svg>`,
-  },
-  {
-    title: "Mounting & Installation Services",
-    description:
-      "Our services go beyond delivery with expert fitting and finishing at your site, ensuring flawless implementation.",
-    icon: `<svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="32"
-        height="32"
-        fill="#000000"
-        viewBox="0 0 256 256"
-      >
-        <path d="M205.66,50.32a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32-11.31l56-56A8,8,0,0,1,205.66,50.32ZM248,58.41a50.13,50.13,0,0,1-14.77,35.66L180,147.3A15.86,15.86,0,0,1,168.69,152H152v16.83a16,16,0,0,1-3.25,9.66,8.08,8.08,0,0,1-.72.83l-8,8a16,16,0,0,1-22.62,0L98.7,168.6l-77,77.06a8,8,0,0,1-11.32-11.32l77.05-77.05-18.7-18.71a16,16,0,0,1,0-22.63l8-8a8,8,0,0,1,.82-.72A16.14,16.14,0,0,1,87.17,104H104V87.3A15.92,15.92,0,0,1,108.68,76l53.24-53.23A50.43,50.43,0,0,1,248,58.41Zm-16,0a34.43,34.43,0,0,0-58.77-24.35L120,87.3V104a16,16,0,0,1-16,16H87.28L80,127.27,128.72,176l7.28-7.28V152a16,16,0,0,1,16-16h16.69l53.23-53.24A34.21,34.21,0,0,0,232,58.41Z" fill="currentColor"></path>
-      </svg>`,
-  },
-  {
-    title: "Creative Design Works",
-    description:
-      "Experience machine-cut stainless steel features for modern interior and exterior aesthetics that elevate your spaces.",
-    icon: ` <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="32"
-        height="32"
-        fill="#000000"
-        viewBox="0 0 256 256"
-      >
-        <path d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H216a8,8,0,0,0,0-16H115.32l112-112A16,16,0,0,0,227.32,73.37ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.69,147.32,64l24-24L216,84.69Z" fill="currentColor"></path>
-      </svg>`,
-  },
-];
+import { fetchLongBenefits, fetchShortBenefits } from '../utils/sanityData';
 
-const stats = [
-  {
-    value: "12",
-    label: "Years' Experience in the industry",
-  },
-  {
-    value: "3000+",
-    label: "Design Portfolio showcasing innovation",
-  },
-  {
-    value: "606+",
-    label: "Completed Projects with excellence",
-  },
-];
+
+const longBenefits = await fetchLongBenefits();
+const shortBenefits = await fetchShortBenefits();
+
+
+const detailedFeatures = longBenefits.map((benefit) => ({
+  title: benefit.title,
+  description: benefit.description,
+
+  icon: benefit.icon || "./public/building.svg", 
+
+}));
+
+const shortFeatures = shortBenefits.map((benefit) => ({
+  title: benefit.title,
+  description: benefit.description,
+}));
+
+
+const {
+  heading = "Our Main Benefits",
+  subheading = "Discover the key benefits of partnering with us. Our focus is on providing innovative and sustainable solutions.",
+} = Astro.props;
 ---
 
 <section class="py-16 container mx-auto px-4">
@@ -68,24 +34,22 @@ const stats = [
       <h2
         class="text-4xl lg:text-5xl font-bold lg:leading-9 pt-4 text-white mb-2"
       >
-        Our Main Benefits
+        {heading}
       </h2>
       <p class="text-gray-300 max-w-md pt-2 mx-auto">
-        Discover the key benefits of partnering with us. Our focus is on
-        providing innovative and sustainable solutions.
-      </p>
+{subheading}      </p>
     </div>
 
     <div
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6"
     >
       {
-        mainsFeatures.map((feature) => (
+        detailedFeatures.map((feature) => (
           <div class="bg-white p-4 rounded-2xl space-y-2 border-4 border-blue-900">
             <div
               class="flex items-center justify-center h-12 w-12 p-3 rounded-full bg-blue-950 text-white"
-              set:html={feature.icon}
-            ></div>
+              
+            ><img src={feature.icon}/></div>
             <h3 class="text-lg font-semibold text-blue-950 mb-2">
               {feature.title}
             </h3>
@@ -98,12 +62,12 @@ const stats = [
       class="pt-6 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-6"
     >
       {
-        stats.map((feature) => (
+        shortFeatures.map((feature) => (
           <div class="flex flex-col bg-white p-4 rounded-2xl space-y-2 border-4 border-blue-900">
             <h3 class="text-3xl font-bold text-blue-900">
-              {feature.value}
+              {feature.title}
             </h3>
-            <p class="text-sm font-medium text-gray-600">{feature.label}</p>
+            <p class="text-sm font-medium text-gray-600">{feature.description}</p>
           </div>
         ))
       }
