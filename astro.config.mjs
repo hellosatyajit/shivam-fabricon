@@ -8,7 +8,7 @@ import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: "https://shivamfabricon.in",
+  site: "https://shivamfabricon.com",
   integrations: [react(), tailwind(), vercel(), sitemap()],
   server: {
     host: true, 
